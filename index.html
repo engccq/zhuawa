@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="简洁易用的万年历，查看公历、农历与节假日。" />
+  <title>万年历 · 日历查询</title>
+  <link rel="stylesheet" href="./src/styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div><p class="eyebrow">CALENDAR / <span id="eyebrowYear"></span></p><h1>万年历</h1><p class="subtitle">公历 · 农历 · 节假日，一页掌握</p></div>
+      <button class="today-button" id="todayButton">回到今天</button>
+    </header>
+    <section class="toolbar" aria-label="日期导航">
+      <form class="jump-form" id="jumpForm"><label for="jumpYear">查询年份</label><input id="jumpYear" type="number" min="1900" max="2100" required /><button type="submit">查询</button></form>
+      <button class="icon-button" id="prevMonth" aria-label="上个月">‹</button>
+      <div class="month-title"><span id="monthLabel"></span><span class="year-label" id="yearLabel"></span></div>
+      <button class="icon-button" id="nextMonth" aria-label="下个月">›</button>
+    </section>
+    <section class="calendar-card" aria-label="月历">
+      <div class="weekdays"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </section>
+    <aside class="legend"><span><i class="dot holiday"></i>休</span><span><i class="dot workday"></i>班</span><span><i class="dot today"></i>今天</span><span class="lunar-note">农历显示于公历下方</span></aside>
+    <footer>愿每一个重要的日子，都值得被记住。</footer>
+  </main>
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
