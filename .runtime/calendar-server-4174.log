@@ -1,7 +1,0 @@
-127.0.0.1 - - [28/Aug/2026 10:56:07] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [28/Aug/2026 10:56:48] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [28/Aug/2026 10:56:49] "GET /src/styles.css HTTP/1.1" 200 -
-127.0.0.1 - - [28/Aug/2026 10:56:49] "GET /src/app.js HTTP/1.1" 200 -
-127.0.0.1 - - [28/Aug/2026 10:56:49] "GET /src/calendar.js HTTP/1.1" 200 -
-127.0.0.1 - - [28/Aug/2026 10:56:50] code 404, message File not found
-127.0.0.1 - - [28/Aug/2026 10:56:50] "GET /favicon.ico HTTP/1.1" 404 -
