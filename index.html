@@ -10,10 +10,11 @@
 <body>
   <main class="app-shell">
     <header class="hero">
-      <div><p class="eyebrow">CALENDAR / 2024</p><h1>万年历</h1><p class="subtitle">公历 · 农历 · 节假日，一页掌握</p></div>
+      <div><p class="eyebrow">CALENDAR / <span id="eyebrowYear"></span></p><h1>万年历</h1><p class="subtitle">公历 · 农历 · 节假日，一页掌握</p></div>
       <button class="today-button" id="todayButton">回到今天</button>
     </header>
     <section class="toolbar" aria-label="日期导航">
+      <form class="jump-form" id="jumpForm"><label for="jumpYear">查询年份</label><input id="jumpYear" type="number" min="1900" max="2100" required /><button type="submit">查询</button></form>
       <button class="icon-button" id="prevMonth" aria-label="上个月">‹</button>
       <div class="month-title"><span id="monthLabel"></span><span class="year-label" id="yearLabel"></span></div>
       <button class="icon-button" id="nextMonth" aria-label="下个月">›</button>

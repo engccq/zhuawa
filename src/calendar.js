@@ -1,3 +1,4 @@
+const lunarDays = ['初一','初二','初三','初四','初五','初六','初七','初八','初九','初十','十一','十二','十三','十四','十五','十六','十七','十八','十九','二十','廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
 const formatter = new Intl.DateTimeFormat('zh-CN-u-ca-chinese', { month: 'long', day: 'numeric' });
 
 export function daysInMonth(year, month) {
@@ -14,16 +15,22 @@ export function monthGrid(year, month) {
 }
 
 export function lunarLabel(date) {
-  return formatter.format(date).replace(/^\d+年/, '').replace(/月(?=\d)/, '月');
+  const parts = Object.fromEntries(formatter.formatToParts(date).filter(({ type }) => type === 'month' || type === 'day').map(({ type, value }) => [type, value]));
+  return `${parts.month}${lunarDays[Number(parts.day) - 1] || parts.day}`;
 }
 
-const fixedHolidays = [
-  ['01-01', '元旦'], ['02-10', '春节'], ['04-04', '清明节'],
-  ['05-01', '劳动节'], ['06-10', '端午节'], ['09-17', '中秋节'], ['10-01', '国庆节']
-];
-
+const qingming = { 2024: '04-04', 2025: '04-04', 2026: '04-05', 2027: '04-04', 2028: '04-04', 2029: '04-04', 2030: '04-05' };
 export function holidaysForYear(year) {
-  return Object.fromEntries(fixedHolidays.map(([monthDay, name]) => [`${year}-${monthDay}`, name]));
+  const result = { [`${year}-01-01`]: '元旦', [`${year}-05-01`]: '劳动节', [`${year}-10-01`]: '国庆节' };
+  if (qingming[year]) result[`${year}-${qingming[year]}`] = '清明节';
+  for (let day = new Date(year, 0, 1); day < new Date(year + 1, 0, 1); day.setDate(day.getDate() + 1)) {
+    const parts = Object.fromEntries(formatter.formatToParts(day).filter(({ type }) => type === 'month' || type === 'day').map(({ type, value }) => [type, value]));
+    const lunarDay = Number(parts.day);
+    if (parts.month === '正月' && lunarDay === 1) result[dateKey(year, day.getMonth() + 1, day.getDate())] = '春节';
+    if (parts.month === '五月' && lunarDay === 5) result[dateKey(year, day.getMonth() + 1, day.getDate())] = '端午节';
+    if (parts.month === '八月' && lunarDay === 15) result[dateKey(year, day.getMonth() + 1, day.getDate())] = '中秋节';
+  }
+  return result;
 }
 
 export function dateKey(year, month, day) {

@@ -14,8 +14,15 @@ test('monthGrid starts on Sunday and contains every day', () => {
   assert.equal(grid.find(x => x.date === 29).date, 29);
 });
 
-test('lunar label uses Chinese calendar', () => {
-  assert.match(lunarLabel(new Date(2024, 1, 10)), /正月|初一/);
+test('lunar label uses traditional day names', () => {
+  assert.match(lunarLabel(new Date(2024, 1, 10)), /正月初一/);
+});
+
+test('lunar holidays use their actual dates', () => {
+  assert.equal(holidaysForYear(2025)['2025-01-29'], '春节');
+  assert.equal(holidaysForYear(2025)['2025-05-31'], '端午节');
+  assert.equal(holidaysForYear(2025)['2025-10-06'], '中秋节');
+  assert.equal(holidaysForYear(2026)['2026-02-17'], '春节');
 });
 
 test('holidays include statutory dates', () => {

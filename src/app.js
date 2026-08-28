@@ -3,10 +3,11 @@ import { monthGrid, lunarLabel, holidaysForYear, dateKey } from './calendar.js';
 const now = new Date();
 let view = { year: now.getFullYear(), month: now.getMonth() + 1 };
 const grid = document.querySelector('#calendarGrid');
-const holidays = holidaysForYear(view.year);
 
 function render() {
   document.querySelector('#monthLabel').textContent = `${view.month}月`;
+  document.querySelector('#eyebrowYear').textContent = view.year;
+  const holidays = holidaysForYear(view.year);
   document.querySelector('#yearLabel').textContent = `${view.year}年`;
   const todayKey = dateKey(now.getFullYear(), now.getMonth() + 1, now.getDate());
   grid.replaceChildren(...monthGrid(view.year, view.month).map(({ date }) => {
@@ -24,4 +25,6 @@ function render() {
 document.querySelector('#prevMonth').addEventListener('click', () => { view.month--; if (view.month < 1) { view.month = 12; view.year--; } render(); });
 document.querySelector('#nextMonth').addEventListener('click', () => { view.month++; if (view.month > 12) { view.month = 1; view.year++; } render(); });
 document.querySelector('#todayButton').addEventListener('click', () => { view = { year: now.getFullYear(), month: now.getMonth() + 1 }; render(); });
+document.querySelector('#jumpYear').value = view.year;
+document.querySelector('#jumpForm').addEventListener('submit', event => { event.preventDefault(); view.year = Number(document.querySelector('#jumpYear').value); render(); });
 render();
