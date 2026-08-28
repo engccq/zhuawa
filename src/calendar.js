@@ -17,14 +17,14 @@ export function lunarLabel(date) {
 // State published in the State Council General Office holiday arrangement notices.
 const schedules = {
   2024: { rest: [['01-01','元旦'],['02-10','春节'],['02-11','春节'],['02-12','春节'],['02-13','春节'],['02-14','春节'],['02-15','春节'],['02-16','春节'],['02-17','春节'],['04-04','清明节'],['04-05','清明节'],['04-06','清明节'],['05-01','劳动节'],['05-02','劳动节'],['05-03','劳动节'],['05-04','劳动节'],['05-05','劳动节'],['06-08','端午节'],['06-09','端午节'],['06-10','端午节'],['09-15','中秋节'],['09-16','中秋节'],['09-17','中秋节'],['10-01','国庆节'],['10-02','国庆节'],['10-03','国庆节'],['10-04','国庆节'],['10-05','国庆节'],['10-06','国庆节'],['10-07','国庆节']], work: ['02-04','02-18','04-07','04-28','05-11','09-14','09-29','10-12'] },
-  2025: { rest: [['01-01','元旦'],...range(2025,'01-28','02-04','春节'),...range(2025,'04-04','04-06','清明节'),...range(2025,'05-01','05-05','劳动节'),...range(2025,'05-31','06-02','端午节'),...range(2025,'10-01','10-08','国庆节')], work: ['01-26','02-08','04-27','09-28','10-11'] },
+  2025: { rest: [['01-01','元旦'],...range(2025,'01-28','02-04','春节'),...range(2025,'04-04','04-06','清明节'),...range(2025,'05-01','05-05','劳动节'),...range(2025,'05-31','06-02','端午节'),...range(2025,'10-01','10-08','国庆节'), ['10-06','中秋节']], work: ['01-26','02-08','04-27','09-28','10-11'] },
   2026: { rest: [['01-01','元旦'],['01-02','元旦'],['01-03','元旦'],...range(2026,'02-15','02-23','春节'),...range(2026,'04-04','04-06','清明节'),...range(2026,'05-01','05-05','劳动节'),...range(2026,'06-19','06-21','端午节'),...range(2026,'09-25','09-27','中秋节'),...range(2026,'10-01','10-07','国庆节')], work: ['01-04','02-14','02-28','05-09','09-20','10-10'] }
 };
 function range(year, start, end, name) { const out = [], cursor = new Date(`${year}-${start}`), last = new Date(`${year}-${end}`); while (cursor <= last) { out.push([cursor.toISOString().slice(5, 10), name]); cursor.setDate(cursor.getDate() + 1); } return out; }
 export function holidaysForYear(year) {
   const schedule = schedules[year]; if (!schedule) return {};
   const result = {};
-  for (const [monthDay, name] of schedule.rest) { const key = `${year}-${monthDay}`; result[key] = result[key] ? `${result[key]}、${name}|休` : `${name}|休`; }
+  for (const [monthDay, name] of schedule.rest) { const key = `${year}-${monthDay}`; result[key] = result[key] ? `${result[key].split('|')[0]}、${name}|休` : `${name}|休`; }
   for (const monthDay of schedule.work) { const key = `${year}-${monthDay}`; result[key] = `${result[key] ? result[key].split('|')[0] + '、' : ''}调休上班|班`; }
   return result;
 }
