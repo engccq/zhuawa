@@ -19,14 +19,17 @@ test('lunar label uses traditional day names', () => {
 });
 
 test('lunar holidays use their actual dates', () => {
-  assert.equal(holidaysForYear(2025)['2025-01-29'], '春节');
-  assert.equal(holidaysForYear(2025)['2025-05-31'], '端午节');
-  assert.equal(holidaysForYear(2025)['2025-10-06'], '中秋节');
-  assert.equal(holidaysForYear(2026)['2026-02-17'], '春节');
+  assert.equal(holidaysForYear(2025)['2025-01-28'], '春节|休');
+  assert.equal(holidaysForYear(2025)['2025-02-04'], '春节|休');
+  assert.equal(holidaysForYear(2025)['2025-01-29'], '春节|休');
+  assert.equal(holidaysForYear(2025)['2025-05-31'], '端午节|休');
+  assert.equal(holidaysForYear(2025)['2025-10-06'], '国庆节|休');
+  assert.equal(holidaysForYear(2026)['2026-02-23'], '春节|休');
 });
 
 test('holidays include statutory dates', () => {
   const holidays = holidaysForYear(2024);
-  assert.equal(holidays['2024-01-01'], '元旦');
-  assert.equal(holidays['2024-10-01'], '国庆节');
+  assert.equal(holidays['2024-01-01'], '元旦|休');
+  assert.equal(holidays['2024-02-04'], '调休上班|班');
+  assert.equal(holidays['2024-10-01'], '国庆节|休');
 });

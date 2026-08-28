@@ -15,8 +15,9 @@ function render() {
     if (!date) { cell.className = 'day empty'; return cell; }
     const key = dateKey(view.year, view.month, date);
     const holiday = holidays[key];
-    cell.className = `day${key === todayKey ? ' is-today' : ''}${holiday ? ' is-holiday' : ''}`;
-    cell.innerHTML = `<strong>${date}</strong><small>${lunarLabel(new Date(view.year, view.month - 1, date))}</small>${holiday ? `<em>${holiday}</em>` : ''}`;
+    const [holidayName, holidayType] = holiday ? holiday.split('|') : ['', ''];
+    cell.className = `day${key === todayKey ? ' is-today' : ''}${holidayType === '休' ? ' is-holiday' : ''}${holidayType === '班' ? ' is-workday' : ''}`;
+    cell.innerHTML = `<strong>${date}</strong><small>${lunarLabel(new Date(view.year, view.month - 1, date))}</small>${holiday ? `<em>${holidayName} · ${holidayType}</em>` : ''}`;
     cell.setAttribute('aria-label', `${view.year}年${view.month}月${date}日${holiday ? `，${holiday}` : ''}`);
     return cell;
   }));
